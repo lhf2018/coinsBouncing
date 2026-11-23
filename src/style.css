@@ -33,13 +33,7 @@
 .controls .blocked{filter:saturate(.5)}
 #workshopGuide{top:802px;left:20px;right:20px;min-height:32px;padding:3px 10px;border:0;background:#e7f1f2;color:#24444f;font-size:12px}
 #workshopGuide button{padding:5px 8px}
-.sack{position:absolute;z-index:3;pointer-events:none;left:123px;top:-26px;width:144px;height:113px;border:2px solid #72242b;border-radius:37% 37% 44% 44% / 34% 34% 51% 51%;background:radial-gradient(ellipse at 34% 38%,#ffb19c55,transparent 43%),linear-gradient(150deg,#d95542 12%,#a82f36 60%,#701b31);box-shadow:inset 0 -8px 14px #6b1b3380,0 10px 19px #17223d70}
-.sack-seam{position:absolute;inset:13px 8px 9px;border:1px solid #ffb0905c;border-radius:inherit}
-.sack-seal{position:absolute;left:50%;top:43px;width:31px;height:31px;translate:-50% 0;rotate:45deg;border:1px solid #ffe4a2;border-radius:7px;background:linear-gradient(135deg,#ffe09a,#cd9440);box-shadow:0 2px 4px #59213c;border-bottom-color:#a76b2b}
-.sack-seal::after{content:"";position:absolute;inset:7px;border:1px solid #875215;border-radius:3px;background:radial-gradient(circle,#ffeab6 0 16%,transparent 20%)}
-.sack-nozzle{position:absolute;left:50%;top:96px;translate:-50% 0;width:76px;height:37px;border:1px solid #774a29;border-radius:13px 13px 17px 17px;background:linear-gradient(#f7d994 2%,#bc8744 32%,#e3b76d 48%,#90602f 100%);box-shadow:inset 0 2px #fff2b4,0 5px 9px #131c3899}
-.sack-nozzle::before{content:"";position:absolute;inset:14px 7px 3px;border-radius:9px;border:1px solid #814c2e;background:linear-gradient(#241725,#512a2c);box-shadow:inset 0 3px 4px #110d1c,0 1px #ffe29f}
-.sack-nozzle::after{content:"";position:absolute;top:6px;left:12px;right:12px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff1bd,transparent)}
+.sack{position:absolute;z-index:3;pointer-events:none;left:105px;top:-11px;width:180px;height:130px;background:url("./money-sack.svg") center/contain no-repeat;filter:drop-shadow(0 15px 3px #172b4e72)}
 .hopper{position:absolute;z-index:3;pointer-events:none;left:146px;top:655px;width:92px;height:50px;border:0;background:none;box-shadow:none}
 .hopper::before{content:"";position:absolute;inset:9px 2px 0;clip-path:polygon(0 0,100% 0,78% 42%,65% 57%,65% 100%,35% 100%,35% 57%,22% 42%);background:linear-gradient(103deg,#223138,#53666d 31%,#8c9da0 48%,#53666d 66%,#26383f);border-bottom:4px solid #26383f}
 .hopper-mouth{position:absolute;inset:0 0 auto;height:25px;border:1px solid #755621;border-radius:9px;background:linear-gradient(#ffe5a5,#af8141 50%,#e0b775);box-shadow:0 2px 5px #26384280}
@@ -47,15 +41,30 @@
 
 /* Shared finishes across the mint and workshop. */
 .stage{background:linear-gradient(155deg,#d9e6f4 10%,#b4c8df 100%);font-family:"Microsoft YaHei UI","PingFang SC",system-ui,sans-serif;font-variant-numeric:tabular-nums}
-.rim{background:linear-gradient(160deg,#3b506e,#2d405b);border-color:#8fa6c2;box-shadow:inset 0 0 0 3px #23354d,0 4px 7px #354d7250}
-.dock .card,#next,#reward{border-width:1px;border-radius:12px;text-shadow:none;box-shadow:inset 0 1px #ffffff55,0 3px 0 #34596288}
-#board .yellow{color:#35281b;background:linear-gradient(#f3d38d,#c99649)}
-#board .cyan{background:linear-gradient(#3c758c,#28576d)}
-#board .lime{background:linear-gradient(#327f61,#205a46)}
-#board .violet{background:linear-gradient(#766995,#514578)}
-.cell{border:1px solid #819aa4;background:linear-gradient(#f4f8fd,#d7e2ef);box-shadow:inset 0 1px #fff,0 2px 3px #3a616620}
-.piece{border:1px solid #5b9da9;background:radial-gradient(circle at 30% 25%,#527f91,#285368 75%);box-shadow:inset 0 1px #b3e8ea77,0 3px 4px #162b4266}
-.multiplier .piece{background:radial-gradient(circle at 30% 25%,#89769f,#56436e 75%);border-color:#ac93bd}
+#board{background:linear-gradient(#dce5f6 0 70%,#d4e9f1 70%)}
+.stage:not(.work) .hud{left:20px;right:auto;top:30px;height:27px;font-size:19px;background:#eef3f8;border:0;border-radius:6px;color:#101421}
+.stage:not(.work) .hud .bill{width:36px;height:22px;margin-left:-10px;margin-right:6px;border-width:2px;font-size:17px}
+.rim{inset:9px 13px auto;height:584px;border-width:13px 5px 5px;border-radius:38px 38px 0 0;border-color:#a8b8de;background:#36466e;box-shadow:inset 0 0 0 3px #2b3f63,inset -18px 0 #2b3f63,0 4px 0 #a1afc0}
+.floor{inset:574px 13px auto;height:17px;border-top:2px solid #42de38;border-bottom:2px solid #35c739;background:repeating-linear-gradient(121deg,transparent 0 14px,#8495a7 15px 17px,#fff 18px 19px),linear-gradient(#f8fcff,#a1b3c7);box-shadow:0 5px #879bb172}
+#board .peg:not(.filled){border-width:1px;border-color:#a4b8d4a6;background:#7182a41a}
+#board .peg.locked{background:transparent}
+.piece{border:2px solid #d42be7;background:radial-gradient(circle at 33% 24%,#5effff,#08dceb 50%,#087486 93%);box-shadow:inset 0 1px #c2ffffab,0 2px 3px #162b4270}
+.multiplier .piece{border-color:#df36ff;background:radial-gradient(circle at 33% 24%,#ffbd73,#ca40ee 55%,#642dae 93%)}
+.dock{inset:614px 3px auto;grid-template-columns:82px minmax(0,1fr) 100px;grid-template-rows:68px 68px;gap:7px 4px;align-items:stretch}
+.dock .bag{grid-area:1/2/3/3;grid-template-rows:subgrid;gap:normal 0}
+.dock .cell{aspect-ratio:auto;border:1.5px solid #15191c;border-radius:8px;background:#fff;box-shadow:inset 0 2px 0 #eef3f7}
+.dock .card,#next{display:grid;place-content:center;justify-items:center;gap:4px;height:auto;border-width:2px;border-radius:8px;font-size:15px;color:#fff;text-shadow:1px 1px #151520,-1px -1px #151520,1px -1px #151520,-1px 1px #151520;box-shadow:inset 0 2px #ffffff69,inset 0 -3px #15152030,0 2px #15152030}
+.dock .card small,#next small{margin:0;font-size:15px}
+#upgrade{grid-area:1/1;color:#fff;border-color:#e57c30;background:#ffba0b}
+.upgrade-arrow{width:29px;height:33px;background:#48f217;clip-path:polygon(50% 0,100% 55%,74% 55%,74% 100%,26% 100%,26% 55%,0 55%);filter:drop-shadow(0 2px #288900)}
+#reward{position:static;grid-area:2/1;border-color:#65108b;background:#bc20f4}
+#boardSpeed{grid-area:1/3;grid-auto-flow:column;align-items:center;gap:8px;border-color:#5b0dc4;background:#9828ec}
+#boardSpeed b{display:grid;place-items:center;width:45px;height:45px;margin:0;border:2px solid #6ef139;border-radius:50%;font-size:16px}
+#buy{grid-area:2/3;border-color:#007fab;background:#08bce5}
+#next{top:542px;right:5px;width:88px;border-color:#417b14;background:#80ca33;font-size:14px}
+#next small{font-size:12px}
+#board .blocked{filter:saturate(.72)}
+#board .guide{top:768px}
 
 .stage{overflow:clip}
 #workshop{background:linear-gradient(155deg,#c9dced,#a8bed6);box-shadow:inset 0 3px #819bb7}

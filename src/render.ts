@@ -1,5 +1,6 @@
 import {Container,Sprite,Texture,WebGLRenderer} from 'pixi.js';
-import {cash,obstacles,speeds,type Game} from './game';
+import {cash,coinAngle,speeds,type Game} from './game';
+import {maxTokenGrowth,tokenFont} from './token';
 const W=390,H=844;
 function point(x:number,y:number){return {x,y};}
 const points=[point(128,388)];
@@ -36,7 +37,7 @@ function belt(g:CanvasRenderingContext2D,distance:number){
 function amount(g:CanvasRenderingContext2D,text:string,x:number,y:number,size:number,rotation=0){g.save();g.translate(x,y);g.rotate(rotation);g.textAlign='center';g.textBaseline='middle';g.font='900 '+size+'px Arial';g.lineJoin='round';g.lineWidth=3;g.strokeStyle='#172132';g.strokeText(text,0,0);g.fillStyle='#c7f39e';g.fillText(text,0,0);g.restore();}
 function token(g:CanvasRenderingContext2D,value:bigint,x:number,y:number,rotation=0,scale=1){
  g.save();g.translate(x,y);g.rotate(rotation);g.scale(scale,scale);
- g.font='800 22px system-ui';g.textAlign='left';g.textBaseline='alphabetic';
+ g.font=tokenFont;g.textAlign='left';g.textBaseline='alphabetic';
  const text='$'+cash(value);
  const bounds=g.measureText(text);
  // Center the visible glyphs on the pivot, including the currency symbol.
@@ -51,19 +52,17 @@ function paint(g:CanvasRenderingContext2D,game:Game,work:boolean,alpha:number){
  const offset=(alpha-1)*speeds[game.s.speed];
  if(work){
   belt(g,game.distance+offset);
-  for(const c of game.track){const p=sample(Math.max(0,Math.min(total,(c.distance+offset)*total/14400)));token(g,c.value,p.x,p.y,Math.atan(Math.tan(p.r)));}
+  for(const c of game.track){const distance=c.previousDistance+(c.distance-c.previousDistance)*alpha;const p=sample(distance*total/14400);token(g,c.value,p.x,p.y,Math.atan(Math.tan(p.r)));}
   const angle=(game.distance+offset)/75;
   document.querySelector<HTMLElement>('.stage')?.style.setProperty('--gear-turn',angle+'deg');return;
- }
- for(const [x,y,r] of obstacles[game.s.stage]){
-  g.beginPath();g.arc(x+3,y+5,r,0,Math.PI*2);g.fillStyle='#263653';g.fill();g.beginPath();g.arc(x,y,r,0,Math.PI*2);g.fillStyle='#859ab6';g.fill();g.strokeStyle='#253553';g.lineWidth=3;g.stroke();
  }
  for(const c of game.coins.values()){
   const p=c.body.translation();
   const age=Math.max(0,game.tick-c.impactTick-1+alpha)/60;
-  const rebound=Math.min(age/.085,Math.max(0,(.38-age)/.295));
-  const rotation=reduce.matches?0:c.spin*Math.sin(age*9)*Math.exp(-age*2.4);
-  const scale=reduce.matches?1:1+Math.min(.17,c.impact*.055)*rebound;
+  const rebound=Math.min(age/.13,Math.max(0,(.5-age)/.37));
+  const easedRebound=rebound*rebound*(3-2*rebound);
+  const rotation=reduce.matches?0:coinAngle(c,game.tick-1+alpha);
+  const scale=reduce.matches?1:1+Math.min(maxTokenGrowth,c.impact*.075)*easedRebound;
   token(g,c.value,c.x+(p.x*30-c.x)*alpha,c.y+(p.y*30-c.y)*alpha,rotation,scale);
  }
  for(const e of game.effects){const age=game.tick-e.tick;g.globalAlpha=1-age/36;amount(g,'+$'+cash(e.value),e.x,e.y-(reduce.matches?0:age*.55),19);}
